@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin | Cascade Tech</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="Cascade Tech home">
+        <img src="assets/logo.svg" alt="">
+        <span class="brand-name">Cascade Tech</span>
+      </a>
+      <span class="header-note">admin</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- login -->
+    <section id="login-view" class="panel hidden">
+      <h1>Admin sign in</h1>
+      <p class="hint">Only the site owner can post materials.</p>
+      <form id="login-form" class="form">
+        <label>Email
+          <input id="email" type="email" autocomplete="username" required>
+        </label>
+        <label>Password
+          <input id="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="btn" type="submit">Sign in</button>
+        <p id="login-status" class="status" role="status"></p>
+      </form>
+    </section>
+
+    <!-- dashboard -->
+    <div id="dash-view" class="hidden">
+      <section class="panel">
+        <div class="admin-bar">
+          <span class="who" id="who"></span>
+          <button id="logout" class="btn ghost" type="button">Sign out</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Post new material</h2>
+        <p class="hint">Upload a PDF, script or any file up to 50 MB. It appears on the site as soon as it's published.</p>
+        <form id="upload-form" class="form">
+          <label>Title
+            <input id="title" type="text" maxlength="120" required>
+          </label>
+          <label>Description
+            <textarea id="description" maxlength="400" placeholder="What will students learn from this?"></textarea>
+          </label>
+          <div class="row">
+            <label>Topic
+              <select id="category" required></select>
+            </label>
+            <label>Access
+              <select id="access">
+                <option value="free">Free</option>
+                <option value="premium">Premium (use later)</option>
+              </select>
+            </label>
+          </div>
+          <label>File
+            <input id="file" type="file" required>
+          </label>
+          <button id="publish" class="btn" type="submit">Publish</button>
+          <p id="upload-status" class="status" role="status"></p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Published materials</h2>
+        <div id="manage-list"></div>
+      </section>
+    </div>
+
+    <p id="setup-msg" class="state hidden">Setup needed: add your Supabase URL and anon key in js/config.js.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><span>&copy; Cascade Tech</span><a href="./">Back to the library</a></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

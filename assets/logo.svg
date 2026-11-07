@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cascade Tech logo: a hooded figure wearing a green face mask">
+  <!-- hood -->
+  <path d="M32 3C17 3 9 14 9 28v12c0 9 4 16 10 20h26c6-4 10-11 10-20V28C55 14 47 3 32 3z" fill="#0d1411" stroke="#2bff88" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- mask -->
+  <path d="M32 12c-9 0-15 7-15 17v9c0 9 6 17 15 17s15-8 15-17v-9c0-10-6-17-15-17z" fill="#2bff88"/>
+  <!-- eye slits -->
+  <path d="M20.5 29.5l9 3-1 4.2-9-2.4z" fill="#070b09"/>
+  <path d="M43.5 29.5l-9 3 1 4.2 9-2.4z" fill="#070b09"/>
+  <!-- brow ridge -->
+  <path d="M20 26l10 2.5M44 26l-10 2.5" stroke="#070b09" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <!-- nose line -->
+  <path d="M32 36v6" stroke="#070b09" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <!-- vent grill -->
+  <path d="M24.5 46h15M25.5 49.5h13M27 53h10" stroke="#070b09" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+</svg>

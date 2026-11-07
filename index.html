@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cascade Tech | Free tech learning materials</title>
+  <meta name="description" content="Download free PDFs, scripts and cheat sheets for programming, cybersecurity, web development, AI and more.">
+  <meta name="theme-color" content="#070b09">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="Cascade Tech home">
+        <img src="assets/logo.svg" alt="">
+        <span class="brand-name">Cascade Tech</span>
+      </a>
+      <span class="header-note">free to download</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="prompt-line" aria-label="Free guides, scripts and cheat sheets for every corner of tech.">
+        <span class="ps" aria-hidden="true">$</span><span id="typed" aria-hidden="true"></span><span class="cursor" aria-hidden="true"></span>
+      </p>
+      <p class="sub">Programming, cybersecurity, web dev, AI and more. Pick a topic, grab the file, start learning. No sign-up needed.</p>
+    </section>
+
+    <section class="controls" aria-label="Find materials">
+      <label class="search" for="search">
+        <span class="ps" aria-hidden="true">&gt;</span>
+        <input id="search" type="search" placeholder="Search materials" autocomplete="off">
+      </label>
+      <div id="chips" class="chips" role="group" aria-label="Filter by topic"></div>
+      <p id="count" class="count" aria-live="polite"></p>
+    </section>
+
+    <ul id="list" class="list"></ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; Cascade Tech</span>
+      <span>Scripts are for learning and authorized testing only.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
