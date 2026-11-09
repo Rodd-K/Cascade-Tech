@@ -53,52 +53,69 @@
     return name.normalize("NFKD").replace(/[^\w.\-]+/g, "_").replace(/_+/g, "_").slice(-100);
   }
 
+  function titleFromName(name) {
+    return name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim().slice(0, 120) || name;
+  }
+
   $("upload-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const status = $("upload-status");
     const btn = $("publish");
-    const file = $("file").files[0];
-    if (!file) return;
-
-    if (file.size > 50 * 1024 * 1024) {
-      setStatus(status, "That file is over 50 MB. Compress it or split it, then try again.", "err");
-      return;
-    }
-
-    btn.disabled = true;
-    setStatus(status, "Uploading...");
+    const files = Array.from($("file").files);
+    if (!files.length) return;
 
     const category = $("category").value;
-    const path = category + "/" + Date.now() + "-" + safeName(file.name);
+    const access = $("access").value;
+    const description = $("description").value.trim();
+    const customTitle = $("title").value.trim();
+    const failed = [];
+    let done = 0;
 
-    const up = await sb.storage.from(cfg.BUCKET).upload(path, file, { contentType: file.type || "application/octet-stream", upsert: false });
-    if (up.error) {
-      setStatus(status, "Upload failed: " + up.error.message, "err");
-      btn.disabled = false;
-      return;
+    btn.disabled = true;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      setStatus(status, "Uploading " + (i + 1) + " of " + files.length + ": " + file.name);
+
+      if (file.size > 50 * 1024 * 1024) {
+        failed.push(file.name + " (over 50 MB)");
+        continue;
+      }
+
+      const path = category + "/" + Date.now() + "-" + i + "-" + safeName(file.name);
+      const up = await sb.storage.from(cfg.BUCKET).upload(path, file, { contentType: file.type || "application/octet-stream", upsert: false });
+      if (up.error) {
+        failed.push(file.name + " (" + up.error.message + ")");
+        continue;
+      }
+
+      const ins = await sb.from("resources").insert({
+        title: files.length === 1 && customTitle ? customTitle : titleFromName(file.name),
+        description,
+        category,
+        access,
+        file_path: path,
+        file_name: file.name,
+        file_size: file.size
+      });
+
+      if (ins.error) {
+        await sb.storage.from(cfg.BUCKET).remove([path]); // don't leave an orphan file behind
+        failed.push(file.name + " (" + ins.error.message + ")");
+        continue;
+      }
+      done++;
     }
 
-    const ins = await sb.from("resources").insert({
-      title: $("title").value.trim(),
-      description: $("description").value.trim(),
-      category,
-      access: $("access").value,
-      file_path: path,
-      file_name: file.name,
-      file_size: file.size
-    });
-
-    if (ins.error) {
-      await sb.storage.from(cfg.BUCKET).remove([path]); // don't leave an orphan file behind
-      setStatus(status, "Could not publish: " + ins.error.message, "err");
-      btn.disabled = false;
-      return;
-    }
-
-    setStatus(status, "Published. It's live on the site now.", "ok");
-    $("upload-form").reset();
     btn.disabled = false;
-    loadManageList();
+
+    if (failed.length) {
+      setStatus(status, "Published " + done + " of " + files.length + ". Failed: " + failed.join("; "), "err");
+    } else {
+      setStatus(status, "Published " + done + (done === 1 ? " material" : " materials") + ". Live on the site now.", "ok");
+      $("upload-form").reset();
+    }
+    if (done) loadManageList();
   });
 
   /* ---------- manage ---------- */
