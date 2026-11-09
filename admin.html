@@ -50,13 +50,13 @@
 
       <section class="panel">
         <h2>Post new material</h2>
-        <p class="hint">Upload a PDF, script or any file up to 50 MB. It appears on the site as soon as it's published.</p>
+        <p class="hint">Upload one or many files at once, up to 50 MB each. They all go under the same topic and appear on the site as soon as they're published.</p>
         <form id="upload-form" class="form">
-          <label>Title
-            <input id="title" type="text" maxlength="120" required>
+          <label>Title (optional)
+            <input id="title" type="text" maxlength="120" placeholder="Leave blank to use each file's name">
           </label>
           <label>Description
-            <textarea id="description" maxlength="400" placeholder="What will students learn from this?"></textarea>
+            <textarea id="description" maxlength="400" placeholder="Shared by every file in this upload"></textarea>
           </label>
           <div class="row">
             <label>Topic
@@ -69,8 +69,8 @@
               </select>
             </label>
           </div>
-          <label>File
-            <input id="file" type="file" required>
+          <label>Files (select or drag in as many as you like)
+            <input id="file" type="file" multiple required>
           </label>
           <button id="publish" class="btn" type="submit">Publish</button>
           <p id="upload-status" class="status" role="status"></p>
