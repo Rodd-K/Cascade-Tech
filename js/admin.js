@@ -36,7 +36,7 @@
     setStatus(status, "Signing in...");
     const { error } = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
     if (error) {
-      setStatus(status, "Sign in failed. Check your email and password.", "err");
+      setStatus(status, "Sign in failed: " + error.message, "err");
       return;
     }
     $("password").value = "";
