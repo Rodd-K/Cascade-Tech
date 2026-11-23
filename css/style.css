@@ -419,3 +419,63 @@ textarea { min-height: 90px; resize: vertical; }
   .cursor { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- bulk import ---------- */
+.bulk-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: end;
+  margin: 18px 0 12px;
+}
+
+.bulk-bar label { min-width: 180px; }
+
+.bulk-wrap {
+  overflow: auto;
+  max-height: 60vh;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+table.bulk {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 720px;
+}
+
+table.bulk th {
+  position: sticky;
+  top: 0;
+  background: var(--panel-2);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 0.78rem;
+  text-align: left;
+  padding: 8px;
+}
+
+table.bulk td {
+  padding: 6px 8px;
+  border-top: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+table.bulk input[type="text"], table.bulk select {
+  padding: 6px 8px;
+  font-size: 0.85rem;
+}
+
+table.bulk .src {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+table.bulk .warn { color: var(--danger); font-family: var(--mono); font-size: 0.78rem; }
+
+table.bulk tr.flagged { background: rgba(255, 93, 108, 0.06); }

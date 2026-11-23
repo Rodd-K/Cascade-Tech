@@ -78,6 +78,49 @@
       </section>
 
       <section class="panel">
+        <h2>Bulk import</h2>
+        <p class="hint">Pick your zip files, or any loose files. They're opened on your device, every file is sorted by its extension, and a topic is suggested from the folder and file names. You review the list before anything goes live.</p>
+        <label>Zip files or loose files
+          <input id="bulk-files" type="file" multiple>
+        </label>
+        <p></p>
+        <button id="bulk-scan" class="btn ghost" type="button">Scan files</button>
+        <p id="bulk-status" class="status" role="status"></p>
+
+        <div id="bulk-review" class="hidden">
+          <div class="bulk-bar">
+            <label>Access for all
+              <select id="bulk-access">
+                <option value="free">Free</option>
+                <option value="premium">Premium (use later)</option>
+              </select>
+            </label>
+            <label>Set topic for checked rows
+              <select id="bulk-topic-all"></select>
+            </label>
+            <span id="bulk-count" class="status"></span>
+          </div>
+          <div class="bulk-wrap">
+            <table class="bulk">
+              <thead>
+                <tr>
+                  <th><input id="bulk-all" type="checkbox" aria-label="Select all" checked></th>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Topic</th>
+                  <th>Size</th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="bulk-body"></tbody>
+            </table>
+          </div>
+          <p></p>
+          <button id="bulk-publish" class="btn" type="button">Publish checked files</button>
+        </div>
+      </section>
+
+      <section class="panel">
         <h2>Published materials</h2>
         <div id="manage-list"></div>
       </section>
@@ -91,6 +134,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/common.js"></script>
   <script src="js/admin.js"></script>

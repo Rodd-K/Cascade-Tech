@@ -1,13 +1,15 @@
 (function () {
-  const { CATEGORIES, sb, isConfigured, categoryLabel, formatSize, formatDate, downloadUrl, el } = window.Cascade;
+  const { CATEGORIES, sb, isConfigured, categoryLabel, typeLabel, formatSize, formatDate, downloadUrl, el } = window.Cascade;
 
   const listEl = document.getElementById("list");
   const countEl = document.getElementById("count");
   const chipsEl = document.getElementById("chips");
+  const typeChipsEl = document.getElementById("type-chips");
   const searchEl = document.getElementById("search");
 
   let all = [];
   let activeCategory = "all";
+  let activeType = "all";
 
   /* ---------- typed intro (runs once on load) ---------- */
   const typedEl = document.getElementById("typed");
@@ -39,6 +41,22 @@
     });
   }
 
+  // Only show file-type chips for types that actually exist in the library.
+  function buildTypeChips() {
+    typeChipsEl.replaceChildren();
+    const present = Array.from(new Set(all.map((r) => r.file_type || "other")));
+    if (present.length < 2) return;
+    [{ id: "all", label: "Any type" }].concat(present.map((id) => ({ id, label: typeLabel(id) }))).forEach((c) => {
+      const b = el("button", { class: "chip", type: "button", "aria-pressed": String(c.id === activeType), "data-id": c.id, text: c.label });
+      b.addEventListener("click", () => {
+        activeType = c.id;
+        typeChipsEl.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.id === activeType)));
+        render();
+      });
+      typeChipsEl.appendChild(b);
+    });
+  }
+
   /* ---------- rendering ---------- */
   function state(msg) {
     listEl.replaceChildren();
@@ -49,8 +67,9 @@
     const q = searchEl.value.trim().toLowerCase();
     const shown = all.filter((r) => {
       const inCat = activeCategory === "all" || r.category === activeCategory;
+      const inType = activeType === "all" || (r.file_type || "other") === activeType;
       const inText = !q || (r.title + " " + (r.description || "")).toLowerCase().includes(q);
-      return inCat && inText;
+      return inCat && inType && inText;
     });
 
     countEl.textContent = shown.length + (shown.length === 1 ? " material" : " materials");
@@ -65,6 +84,7 @@
       const meta = el("div", { class: "res-meta" }, [
         el("span", { class: "badge" + (r.access === "premium" ? " premium" : ""), text: r.access === "premium" ? "Premium" : "Free" }),
         el("span", { text: categoryLabel(r.category) }),
+        el("span", { text: typeLabel(r.file_type) }),
         el("span", { text: formatSize(r.file_size) }),
         el("span", { text: formatDate(r.created_at) })
       ]);
@@ -96,6 +116,7 @@
       return;
     }
     all = data || [];
+    buildTypeChips();
     render();
   }
 

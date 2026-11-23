@@ -8,6 +8,7 @@ create table if not exists public.resources (
   description text not null default '',
   category    text not null,
   access      text not null default 'free' check (access in ('free', 'premium')),
+  file_type   text not null default 'other',
   file_path   text not null,
   file_name   text not null,
   file_size   bigint,

@@ -20,6 +20,16 @@ Frontend: plain HTML/CSS/JS on Netlify. Backend: Supabase (database, file storag
 1. Drag this whole folder onto app.netlify.com/drop, or connect it to a Git repo.
 2. Open `your-site.netlify.app/admin.html`, sign in, and post your first material.
 
+## Bulk import (zips and mixed files)
+
+1. If you already ran `setup.sql` before this update, run `supabase/add-file-type.sql` once in the SQL Editor. It adds the file type column and fills it in for anything already uploaded.
+2. On the admin page, open **Bulk import**, pick your zip files (or loose files) and press **Scan files**.
+3. Each file is sorted by extension (PDF, Python, Notebook, Web, Code, Docs, Data, Programs, Archives, Media, Other) and stored in a folder for that type. A topic is suggested from folder and file names. Change any row, or use "Set topic for checked rows".
+4. Files that look like they contain a token, key or password are flagged and left unchecked. Remove the secret from the file before you upload it.
+5. Press **Publish checked files**.
+
+Limits: .zip only (not .rar or .7z), no password-protected zips, 50 MB per file, and very large zips use your browser's memory, so do a few at a time.
+
 ## Notes
 
 - **Premium label:** the "Premium" option only changes the badge for now. Files sit in a public bucket, so anyone with a file's link can download it. When you add payments, move premium files to a private bucket and serve them through signed links.
